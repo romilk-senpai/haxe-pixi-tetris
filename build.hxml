@@ -1,0 +1,9 @@
+-lib perf.js
+-lib pixijs
+-cp src
+--dce full
+-debug
+
+-main Main
+-js bin/js/main.js
+--macro include("pixi", true)
