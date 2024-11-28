@@ -4,6 +4,5 @@
 --dce full
 -debug
 
--main Main
+-main tetris.Main
 -js bin/js/main.js
---macro include("pixi", true)

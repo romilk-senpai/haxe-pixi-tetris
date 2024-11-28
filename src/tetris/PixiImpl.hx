@@ -1,10 +1,11 @@
+package tetris;
+
+import tetris.game.IRenderer;
 import pixi.core.Application;
 import pixi.core.graphics.Graphics;
-import pixi.core.textures.Texture;
-import pixi.core.sprites.Sprite;
 import js.Browser;
 
-class Main extends Application {
+class PixiImpl extends Application implements IRenderer {
 	private static final SCREEN_WIDTH:Int = 800;
 	private static final SCREEN_HEIGHT:Int = 600;
 	private static final BG_COLOR:Int = 0x14182E;
@@ -21,9 +22,9 @@ class Main extends Application {
 		};
 
 		super(options);
-		ticker.add(function(delta) {
-			gameLoop(delta);
-		});
+		// ticker.add(function(delta) {
+		// gameLoop(delta);
+		// });
 
 		// _bunny = new Sprite(Texture.from("assets/bunny.png"));
 		// _bunny.anchor.set(0.5);
@@ -39,9 +40,9 @@ class Main extends Application {
 		Browser.document.body.appendChild(view);
 	}
 
-	function gameLoop(delta:Float) {}
+	public function drawField() {}
 
-	static function main() {
-		new Main();
-	}
+	public function drawShape() {}
+
+	public function pollEvents() {}
 }
