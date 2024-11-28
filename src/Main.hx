@@ -5,40 +5,41 @@ import pixi.core.sprites.Sprite;
 import js.Browser;
 
 class Main extends Application {
-	var _bunny:Sprite;
-	var _graphic:Graphics;
+	private static final SCREEN_WIDTH:Int = 800;
+	private static final SCREEN_HEIGHT:Int = 600;
+	private static final BG_COLOR:Int = 0x14182E;
+
+	private var _graphics:Graphics;
 
 	public function new() {
 		var options:ApplicationOptions = {
-			width: Browser.window.innerWidth,
-			height: Browser.window.innerHeight,
-			backgroundColor: 0x006666,
+			width: SCREEN_WIDTH,
+			height: SCREEN_HEIGHT,
+			backgroundColor: BG_COLOR,
 			transparent: true,
 			antialias: false,
 		};
 
 		super(options);
 		ticker.add(function(delta) {
-			_animate(delta);
+			gameLoop(delta);
 		});
 
-		_bunny = new Sprite(Texture.from("assets/bunny.png"));
-		_bunny.anchor.set(0.5);
-		_bunny.position.set(400, 300);
+		// _bunny = new Sprite(Texture.from("assets/bunny.png"));
+		// _bunny.anchor.set(0.5);
+		// _bunny.position.set(400, 300);
 
-		_graphic = new Graphics();
-		_graphic.beginFill(0xFF0000, 0.4);
-		_graphic.drawRect(200, 150, 400, 300);
-		_graphic.endFill();
+		_graphics = new Graphics();
+		_graphics.beginFill(BG_COLOR, 1);
+		_graphics.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		_graphics.endFill();
 
-		stage.addChild(_graphic);
-		stage.addChild(_bunny);
+		stage.addChild(_graphics);
+		view.id = "canvas";
 		Browser.document.body.appendChild(view);
 	}
 
-	function _animate(e:Float) {
-		_bunny.rotation += 0.1;
-	}
+	function gameLoop(delta:Float) {}
 
 	static function main() {
 		new Main();
