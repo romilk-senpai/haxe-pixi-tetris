@@ -15,7 +15,7 @@ class Board {
 	public function applyTetromino(tetromino:Tetromino) {
 		for (block in tetromino.blocks) {
 			var x = tetromino.x + block.x;
-			var y = tetromino.y = block.y;
+			var y = tetromino.y + block.y;
 			_grid[y * gridHeight + x] = tetromino.color;
 		}
 

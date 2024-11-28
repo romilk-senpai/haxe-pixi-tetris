@@ -1,5 +1,7 @@
 package tetris.game;
 
+import js.html.Console;
+
 class TetrisGame {
 	private var _board:Board;
 	private var _renderer:IRenderer;
@@ -23,22 +25,28 @@ class TetrisGame {
 
 	public function loop(deltaTime:Float) {
 		var input = _renderer.pollEvents();
-
 		_totalTime += deltaTime;
-		if (_totalTime > _lastMoveTime + _moveGap) {
+		if (_totalTime >= _lastMoveTime + _moveGap) {
 			_lastMoveTime += _moveGap;
+			_current.y++;
 			for (i in 0..._current.blocks.length) {
 				if (i < _current.blocks.length - 1 && _current.blocks[i + 1].y > _current.blocks[i].y) {
 					continue;
 				}
 				if (checkPosition(_current.x + _current.blocks[i].x, _current.y + _current.blocks[i].y)) {
-					_board.applyTetromino(_current);
-					return;
+					onReachedBottom();
+					break;
 				}
 			}
 		}
-
 		_renderer.drawBoard(_board);
+		_renderer.drawTetromino(_current);
+	}
+
+	private function onReachedBottom() {
+		_board.applyTetromino(_current);
+		_current = Tetromino.NewO();
+		_current.x = Math.round(_board.gridWidth / 2);
 	}
 
 	private function checkPosition(x:Int, y:Int):Bool {
@@ -46,6 +54,6 @@ class TetrisGame {
 			return true;
 		}
 
-		return _board.getBlockState(x, y - 1) > 0;
+		return _board.getBlockState(x, y + 1) > 0;
 	}
 }

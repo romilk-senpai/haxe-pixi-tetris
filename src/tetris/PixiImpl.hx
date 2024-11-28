@@ -1,5 +1,6 @@
 package tetris;
 
+import tetris.game.Tetromino;
 import tetris.game.TetrisGame;
 import tetris.game.Board;
 import tetris.game.TetrisInput;
@@ -9,8 +10,8 @@ import pixi.core.graphics.Graphics;
 import js.Browser;
 
 class PixiImpl extends Application implements IRenderer {
-	private static final SCREEN_WIDTH:Int = 400;
-	private static final SCREEN_HEIGHT:Int = 800;
+	private static final SCREEN_WIDTH:Int = 1280;
+	private static final SCREEN_HEIGHT:Int = 720;
 	private static final BG_COLOR:Int = 0x14182E;
 
 	private var _graphics:Graphics;
@@ -25,14 +26,15 @@ class PixiImpl extends Application implements IRenderer {
 			height: SCREEN_HEIGHT,
 			backgroundColor: BG_COLOR,
 			transparent: true,
-			antialias: false,
+			antialias: false
 		};
 
 		_graphics = new Graphics();
 
 		super(options);
 		ticker.add(function(deltaTime) {
-			_game.loop(deltaTime);
+			// This dt is bullshit need to double check this sometime
+			_game.loop(deltaTime / ticker.FPS);
 		});
 
 		stage.addChild(_graphics);
@@ -41,26 +43,34 @@ class PixiImpl extends Application implements IRenderer {
 	}
 
 	public function drawBoard(board:Board) {
-		var outerSize = 36;
-		var innerSize = 32;
 		for (x in 0...board.gridWidth) {
 			for (y in 0...board.gridHeight) {
 				var state = board.getBlockState(x, y);
-				_graphics.beginFill(0x827A63, 1);
-				var outerX = x * outerSize;
-				var outerY = y * outerSize;
-				_graphics.drawRect(outerX, outerY, outerSize, outerSize);
-				_graphics.endFill();
-				_graphics.beginFill(state, 1);
-				var innerX = outerX + outerSize / 2 - innerSize / 2;
-				var innerY = outerY + outerSize / 2 - innerSize / 2;
-				_graphics.drawRect(innerX, innerY, innerSize, innerSize);
-				_graphics.endFill();
+				drawBlock(x, y, state);
 			}
 		}
 	}
 
-	public function drawShape() {}
+	public function drawTetromino(tetromino:Tetromino) {
+		for (block in tetromino.blocks) {
+			drawBlock(tetromino.x + block.x, tetromino.y + block.y, tetromino.color);
+		}
+	}
+
+	private function drawBlock(x:Int, y:Int, state:Int) {
+		var outerSize = 36;
+		var innerSize = 32;
+		_graphics.beginFill(0x827A63, 1);
+		var outerX = x * outerSize;
+		var outerY = y * outerSize;
+		_graphics.drawRect(outerX, outerY, outerSize, outerSize);
+		_graphics.endFill();
+		_graphics.beginFill(state, 1);
+		var innerX = outerX + outerSize / 2 - innerSize / 2;
+		var innerY = outerY + outerSize / 2 - innerSize / 2;
+		_graphics.drawRect(innerX, innerY, innerSize, innerSize);
+		_graphics.endFill();
+	}
 
 	public function pollEvents():TetrisInput {
 		return new TetrisInput();
