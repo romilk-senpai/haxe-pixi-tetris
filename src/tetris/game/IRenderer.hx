@@ -1,7 +1,9 @@
 package tetris.game;
 
+import tetris.game.TetrisInput;
+
 interface IRenderer {
-	public function drawField():Void;
+	public function drawBoard(board:Board):Void;
 	public function drawShape():Void;
-	public function pollEvents():Void;
+	public function pollEvents():TetrisInput;
 }
