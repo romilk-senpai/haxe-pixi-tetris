@@ -12,14 +12,16 @@ class TetrominoColors {
 }
 
 class Tetromino {
-	public var blocks:Array<Block>;
+	public var rotations:Array<Array<Block>>;
+	public var rotation:Int;
 	public var x:Int;
 	public var y:Int;
 	public var color:Int;
 
-	public function new(startX:Int, startY:Int, blocks:Array<Block>, color:Int) {
-		this.blocks = blocks;
+	public function new(startX:Int, startY:Int, blocks:Array<Array<Block>>, color:Int) {
+		this.rotations = blocks;
 		this.color = color;
+		rotation = 0;
 		x = startX;
 		y = startY;
 	}
@@ -48,43 +50,52 @@ class Tetromino {
 
 	public static function newO(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2) - 1;
-		var blocks = [new Block(0, 0), new Block(0, 1), new Block(1, 0), new Block(1, 1)];
+		var blocks = [[new Block(0, 0), new Block(0, 1), new Block(1, 0), new Block(1, 1)]];
 		return new Tetromino(startX, -1, blocks, TetrominoColors.Yellow);
 	}
 
 	public static function newI(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2);
-		var blocks = [new Block(0, 0), new Block(0, 1), new Block(0, 2), new Block(0, 3)];
+		var blocks = [
+			[new Block(0, 0), new Block(0, 1), new Block(0, 2), new Block(0, 3)],
+			[new Block(0, 0), new Block(1, 0), new Block(2, 0), new Block(3, 0)]
+		];
 		return new Tetromino(startX, -3, blocks, TetrominoColors.Aqua);
 	}
 
 	public static function newS(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
-		var blocks = [new Block(0, 1), new Block(1, 0), new Block(1, 1), new Block(2, 0)];
+		var blocks = [
+			[new Block(0, 1), new Block(1, 0), new Block(1, 1), new Block(2, 0)],
+			[new Block(0, 0), new Block(0, 1), new Block(1, 1), new Block(1, 2)]
+		];
 		return new Tetromino(startX, -1, blocks, TetrominoColors.Red);
 	}
 
 	public static function newZ(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
-		var blocks = [new Block(0, 0), new Block(1, 0), new Block(1, 1), new Block(2, 1)];
+		var blocks = [
+			[new Block(0, 0), new Block(1, 0), new Block(1, 1), new Block(2, 1)],
+			[new Block(0, 1), new Block(0, 2), new Block(1, 0), new Block(1, 1)]
+		];
 		return new Tetromino(startX, -1, blocks, TetrominoColors.Green);
 	}
 
 	public static function newL(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
-		var blocks = [new Block(0, 0), new Block(0, 1), new Block(0, 2), new Block(1, 2)];
+		var blocks = [[new Block(0, 0), new Block(0, 1), new Block(0, 2), new Block(1, 2)]];
 		return new Tetromino(startX, -2, blocks, TetrominoColors.Orange);
 	}
 
 	public static function newJ(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
-		var blocks = [new Block(0, 2), new Block(1, 0), new Block(1, 1), new Block(1, 2)];
+		var blocks = [[new Block(0, 2), new Block(1, 0), new Block(1, 1), new Block(1, 2)]];
 		return new Tetromino(startX, -2, blocks, TetrominoColors.Blue);
 	}
 
 	public static function newT(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
-		var blocks = [new Block(0, 0), new Block(1, 0), new Block(1, 1), new Block(2, 0)];
+		var blocks = [[new Block(0, 0), new Block(1, 0), new Block(1, 1), new Block(2, 0)]];
 		return new Tetromino(startX, -1, blocks, TetrominoColors.Purple);
 	}
 }

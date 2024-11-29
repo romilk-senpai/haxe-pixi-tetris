@@ -13,14 +13,14 @@ class Board {
 	}
 
 	public function applyTetromino(tetromino:Tetromino) {
-		for (block in tetromino.blocks) {
+		for (block in tetromino.rotations[tetromino.rotation]) {
 			var x = tetromino.x + block.x;
 			var y = tetromino.y + block.y;
 			_grid[y * gridHeight + x] = tetromino.color;
 		}
 
 		var checkedRow = -1;
-		for (block in tetromino.blocks) {
+		for (block in tetromino.rotations[tetromino.rotation]) {
 			var y = tetromino.y + block.y;
 			if (y > checkedRow) {
 				var collapse = true;

@@ -33,9 +33,11 @@ class TetrisGame {
 			return;
 		}
 
+		var blocks = _current.rotations[_current.rotation];
+
 		if (input.moveLeft && _current.x > 0) {
 			var move = true;
-			for (block in _current.blocks) {
+			for (block in blocks) {
 				if (_board.getBlockState(_current.x + block.x - 1, _current.y + block.y) > 0) {
 					move = false;
 					break;
@@ -46,9 +48,9 @@ class TetrisGame {
 			}
 		}
 
-		if (input.moveRight && _current.x + _current.blocks[_current.blocks.length - 1].x < _board.gridWidth - 1) {
+		if (input.moveRight && _current.x + blocks[blocks.length - 1].x < _board.gridWidth - 1) {
 			var move = true;
-			for (block in _current.blocks) {
+			for (block in blocks) {
 				if (_board.getBlockState(_current.x + block.x + 1, _current.y + block.y) > 0) {
 					move = false;
 					break;
@@ -78,18 +80,18 @@ class TetrisGame {
 	}
 
 	private function move():Bool {
-		for (i in 0..._current.blocks.length) {
-			if (i < _current.blocks.length - 1 && _current.blocks[i + 1].y > _current.blocks[i].y) {
+		var blocks = _current.rotations[_current.rotation];
+		for (i in 0..._current.rotations.length) {
+			if (i < blocks.length - 1 && blocks[i + 1].y > blocks[i].y) {
 				continue;
 			}
 
-			if (_current.y + _current.blocks[i].y == _board.gridHeight - 1) {
+			if (_current.y + blocks[i].y == _board.gridHeight - 1) {
 				onReachedBottom();
 				return true;
 			}
 
-			if (_current.y < _board.gridHeight - 1
-				&& checkPosition(_current.x + _current.blocks[i].x, _current.y + _current.blocks[i].y + 1)) {
+			if (_current.y < _board.gridHeight - 1 && checkPosition(_current.x + blocks[i].x, _current.y + blocks[i].y + 1)) {
 				onReachedBottom();
 				return true;
 			}
@@ -100,7 +102,7 @@ class TetrisGame {
 	private function onReachedBottom() {
 		_board.applyTetromino(_current);
 		_current = Tetromino.newRandom(_board.gridWidth);
-		for (block in _current.blocks) {
+		for (block in _current.rotations[_current.rotation]) {
 			if (checkPosition(_current.x + block.x, _current.y + block.y)) {
 				_gameOver = true;
 				return;
