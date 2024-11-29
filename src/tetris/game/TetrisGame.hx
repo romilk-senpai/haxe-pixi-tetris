@@ -33,6 +33,14 @@ class TetrisGame {
 			return;
 		}
 
+		if (input.rotateCw) {
+			_current.rotateCw();
+		}
+
+		if (input.rotateCcw) {
+			_current.rotateCcw();
+		}
+
 		var blocks = _current.rotations[_current.rotation];
 
 		if (input.moveLeft && _current.x > 0) {
@@ -81,11 +89,7 @@ class TetrisGame {
 
 	private function move():Bool {
 		var blocks = _current.rotations[_current.rotation];
-		for (i in 0..._current.rotations.length) {
-			if (i < blocks.length - 1 && blocks[i + 1].y > blocks[i].y) {
-				continue;
-			}
-
+		for (i in 0...blocks.length) {
 			if (_current.y + blocks[i].y == _board.gridHeight - 1) {
 				onReachedBottom();
 				return true;

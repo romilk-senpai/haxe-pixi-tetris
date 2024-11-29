@@ -26,6 +26,20 @@ class Tetromino {
 		y = startY;
 	}
 
+	public function rotateCw() {
+		rotation++;
+		if (rotation == rotations.length) {
+			rotation = 0;
+		}
+	}
+
+	public function rotateCcw() {
+		rotation--;
+		if (rotation < 0) {
+			rotation = rotations.length - 1;
+		}
+	}
+
 	public static function newRandom(boardWidth:Int = 10):Tetromino {
 		var randomNumber = Math.floor(Math.random() * 7) + 1;
 		switch (randomNumber) {

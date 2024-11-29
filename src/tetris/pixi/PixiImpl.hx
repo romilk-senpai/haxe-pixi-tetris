@@ -100,6 +100,14 @@ class PixiImpl extends Application implements IRenderer {
 		if (e.keyCode == KeyEvent.DOM_VK_S || e.keyCode == KeyEvent.DOM_VK_DOWN) {
 			_input.moveDown = true;
 		}
+
+		if (e.keyCode == KeyEvent.DOM_VK_X || e.keyCode == KeyEvent.DOM_VK_W) {
+			_input.rotateCw = true;
+		}
+
+		if (e.keyCode == KeyEvent.DOM_VK_Z) {
+			_input.rotateCcw = true;
+		}
 	}
 
 	public function drawGameOver() {
