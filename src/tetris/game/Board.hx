@@ -1,7 +1,5 @@
 package tetris.game;
 
-import js.html.Console;
-
 class Board {
 	public var gridWidth:Int;
 	public var gridHeight:Int;

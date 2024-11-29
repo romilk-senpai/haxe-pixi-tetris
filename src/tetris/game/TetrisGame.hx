@@ -34,11 +34,29 @@ class TetrisGame {
 		}
 
 		if (input.moveLeft && _current.x > 0) {
-			_current.x--;
+			var move = true;
+			for (block in _current.blocks) {
+				if (_board.getBlockState(_current.x + block.x - 1, _current.y + block.y) > 0) {
+					move = false;
+					break;
+				}
+			}
+			if (move) {
+				_current.x--;
+			}
 		}
 
 		if (input.moveRight && _current.x + _current.blocks[_current.blocks.length - 1].x < _board.gridWidth - 1) {
-			_current.x++;
+			var move = true;
+			for (block in _current.blocks) {
+				if (_board.getBlockState(_current.x + block.x + 1, _current.y + block.y) > 0) {
+					move = false;
+					break;
+				}
+			}
+			if (move) {
+				_current.x++;
+			}
 		}
 
 		if (input.moveDown) {
