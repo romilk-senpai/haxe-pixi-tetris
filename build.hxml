@@ -2,7 +2,6 @@
 -lib pixijs
 -cp src
 --dce full
--debug
 
 -main tetris.Main
 -js bin/js/main.js
