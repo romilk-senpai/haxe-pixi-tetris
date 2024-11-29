@@ -35,20 +35,19 @@ class PixiImpl extends Application implements IRenderer {
 		};
 
 		_graphics = new Graphics();
+		_input = new TetrisInput();
 
 		super(options);
 		ticker.add(function(deltaTime) {
-			_input = new TetrisInput();
 			// This dt is bullshit need to double check this sometime
 			_game.loop(deltaTime / ticker.FPS);
+			_input = new TetrisInput();
 		});
 
 		stage.addChild(_graphics);
 		view.id = "canvas";
 		Browser.document.body.appendChild(view);
 
-		// window.addEventListener('keydown', this._onKeyDown.bind(this), true);
-		// window.addEventListener('keyup', this._onKeyUp.bind(this), true);
 		Browser.window.addEventListener('keydown', onKeyDown, true);
 	}
 

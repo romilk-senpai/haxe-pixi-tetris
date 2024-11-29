@@ -7,7 +7,7 @@ class TetrisInput {
 
 	public function new() {
 		moveRight = false;
-		moveRight = false;
+		moveLeft = false;
 		moveDown = false;
 	}
 }

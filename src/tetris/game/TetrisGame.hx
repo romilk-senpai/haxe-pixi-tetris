@@ -1,7 +1,5 @@
 package tetris.game;
 
-import js.html.Console;
-
 class TetrisGame {
 	private var _board:Board;
 	private var _renderer:IRenderer;
@@ -25,6 +23,14 @@ class TetrisGame {
 
 	public function loop(deltaTime:Float) {
 		var input = _renderer.pollEvents();
+		if (input.moveLeft) {
+			_current.x--;
+		}
+
+		if (input.moveRight) {
+			_current.x++;
+		}
+
 		_totalTime += deltaTime;
 		if (_totalTime >= _lastMoveTime + _moveGap) {
 			_lastMoveTime += _moveGap;
