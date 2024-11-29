@@ -1,9 +1,7 @@
 package tetris.pixi;
 
-import haxe.io.Input;
 import js.html.KeyboardEvent;
 import js.html.KeyEvent;
-import js.html.Console;
 import tetris.game.Tetromino;
 import tetris.game.TetrisGame;
 import tetris.game.Board;

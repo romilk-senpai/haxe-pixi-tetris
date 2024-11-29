@@ -15,19 +15,18 @@ class TetrisGame {
 		_board = new Board(10, 20);
 		_totalTime = 0;
 		_lastMoveTime = 0;
-		_moveGap = 0.5;
+		_moveGap = 5.0;
 
-		_current = Tetromino.NewO();
-		_current.x = Math.round(_board.gridWidth / 2);
+		_current = Tetromino.newRandom(_board.gridWidth);
 	}
 
 	public function loop(deltaTime:Float) {
 		var input = _renderer.pollEvents();
-		if (input.moveLeft) {
+		if (input.moveLeft && _current.x > 0) {
 			_current.x--;
 		}
 
-		if (input.moveRight) {
+		if (input.moveRight && _current.x + _current.blocks[_current.blocks.length - 1].x < _board.gridWidth - 1) {
 			_current.x++;
 		}
 
@@ -51,8 +50,7 @@ class TetrisGame {
 
 	private function onReachedBottom() {
 		_board.applyTetromino(_current);
-		_current = Tetromino.NewO();
-		_current.x = Math.round(_board.gridWidth / 2);
+		_current = Tetromino.newRandom(_board.gridWidth);
 	}
 
 	private function checkPosition(x:Int, y:Int):Bool {
