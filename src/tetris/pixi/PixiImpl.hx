@@ -70,14 +70,14 @@ class PixiImpl extends Application implements IRenderer {
 	private function drawBlock(x:Int, y:Int, state:Int) {
 		var outerSize = 36;
 		var innerSize = 32;
-		_graphics.beginFill(0x827A63, 1);
 		var outerX = x * outerSize;
 		var outerY = y * outerSize;
+		_graphics.beginFill(0x827A63, 1);
 		_graphics.drawRect(outerX, outerY, outerSize, outerSize);
 		_graphics.endFill();
-		_graphics.beginFill(state, 1);
 		var innerX = outerX + outerSize / 2 - innerSize / 2;
 		var innerY = outerY + outerSize / 2 - innerSize / 2;
+		_graphics.beginFill(state, 1);
 		_graphics.drawRect(innerX, innerY, innerSize, innerSize);
 		_graphics.endFill();
 	}

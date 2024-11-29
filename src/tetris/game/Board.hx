@@ -1,5 +1,7 @@
 package tetris.game;
 
+import js.html.Console;
+
 class Board {
 	public var gridWidth:Int;
 	public var gridHeight:Int;
@@ -19,9 +21,9 @@ class Board {
 			_grid[y * gridHeight + x] = tetromino.color;
 		}
 
-		var checkedRow = 1;
+		var checkedRow = -1;
 		for (block in tetromino.blocks) {
-			var y = tetromino.y = block.y;
+			var y = tetromino.y + block.y;
 			if (y > checkedRow) {
 				var collapse = true;
 				for (x in 0...gridWidth) {
@@ -31,13 +33,28 @@ class Board {
 					}
 				}
 				if (collapse) {
-					// collapse
+					this.collapseRow(y);
 				}
+			}
+			checkedRow = y;
+		}
+	}
+
+	private function collapseRow(rowY:Int) {
+		for (x in 0...gridWidth) {
+			_grid[rowY * gridHeight + x] = 0;
+		}
+
+		for (x in 0...gridWidth) {
+			for (y in 0...rowY - 1) {
+				_grid[(rowY - y) * gridHeight + x] = _grid[(rowY - y - 1) * gridHeight + x];
+				_grid[(rowY - y - 1) * gridHeight + x] = 0;
 			}
 		}
 	}
 
 	public function getBlockState(x:Int, y:Int):Int {
-		return _grid[y * gridHeight + x];
+		var state = _grid[y * gridHeight + x];
+		return state != null ? state : 0;
 	}
 }
