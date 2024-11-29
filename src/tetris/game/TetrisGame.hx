@@ -21,7 +21,10 @@ class TetrisGame {
 	}
 
 	public function loop(deltaTime:Float) {
+		_totalTime += deltaTime;
+
 		var input = _renderer.pollEvents();
+
 		if (input.moveLeft && _current.x > 0) {
 			_current.x--;
 		}
@@ -30,22 +33,35 @@ class TetrisGame {
 			_current.x++;
 		}
 
-		_totalTime += deltaTime;
-		if (_totalTime >= _lastMoveTime + _moveGap) {
-			_lastMoveTime += _moveGap;
-			_current.y++;
-			for (i in 0..._current.blocks.length) {
-				if (i < _current.blocks.length - 1 && _current.blocks[i + 1].y > _current.blocks[i].y) {
-					continue;
+		if (input.moveDown) {
+			_lastMoveTime = _totalTime;
+			if (!move()) {
+				_current.y++;
+			}
+		} else {
+			if (_totalTime >= _lastMoveTime + _moveGap) {
+				if (!move()) {
+					_current.y++;
 				}
-				if (checkPosition(_current.x + _current.blocks[i].x, _current.y + _current.blocks[i].y)) {
-					onReachedBottom();
-					break;
-				}
+				_lastMoveTime += _moveGap;
 			}
 		}
+
 		_renderer.drawBoard(_board);
 		_renderer.drawTetromino(_current);
+	}
+
+	private function move():Bool {
+		for (i in 0..._current.blocks.length) {
+			if (i < _current.blocks.length - 1 && _current.blocks[i + 1].y > _current.blocks[i].y) {
+				continue;
+			}
+			if (checkPosition(_current.x + _current.blocks[i].x, _current.y + _current.blocks[i].y)) {
+				onReachedBottom();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private function onReachedBottom() {
