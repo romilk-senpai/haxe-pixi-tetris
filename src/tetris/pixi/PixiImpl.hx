@@ -1,5 +1,8 @@
 package tetris.pixi;
 
+import js.html.LabelElement;
+import pixi.core.text.Text;
+import pixi.core.text.DefaultStyle;
 import js.html.KeyboardEvent;
 import js.html.KeyEvent;
 import tetris.game.Tetromino;
@@ -12,7 +15,7 @@ import pixi.core.graphics.Graphics;
 import js.Browser;
 
 class PixiImpl extends Application implements IRenderer {
-	private static final SCREEN_WIDTH:Int = 1280;
+	private static final SCREEN_WIDTH:Int = 360;
 	private static final SCREEN_HEIGHT:Int = 720;
 	private static final BG_COLOR:Int = 0x14182E;
 
@@ -20,6 +23,7 @@ class PixiImpl extends Application implements IRenderer {
 
 	private var _game:TetrisGame;
 	private var _input:TetrisInput;
+	private var _label:Text;
 
 	public function new() {
 		_game = new TetrisGame(this);
@@ -84,6 +88,8 @@ class PixiImpl extends Application implements IRenderer {
 	}
 
 	private function onKeyDown(e:KeyboardEvent):Void {
+		_input.anyKey = true;
+
 		if (e.keyCode == KeyEvent.DOM_VK_A || e.keyCode == KeyEvent.DOM_VK_LEFT) {
 			_input.moveLeft = true;
 		}
@@ -94,6 +100,19 @@ class PixiImpl extends Application implements IRenderer {
 
 		if (e.keyCode == KeyEvent.DOM_VK_S || e.keyCode == KeyEvent.DOM_VK_DOWN) {
 			_input.moveDown = true;
+		}
+	}
+
+	public function drawGameOver() {
+		if (_label == null) {
+			_graphics.clear();
+			var style1:DefaultStyle = {};
+			style1.fill = 0xF78181;
+			style1.fontSize = 36;
+			style1.fontFamily = "Courier";
+			_label = new Text("GAME OVER", style1);
+			_label.position.set(SCREEN_WIDTH / 2 - _label.width / 2, SCREEN_HEIGHT / 2 - _label.height / 2);
+			stage.addChild(_label);
 		}
 	}
 }
