@@ -1,6 +1,5 @@
 package tetris.pixi;
 
-import js.html.LabelElement;
 import pixi.core.text.Text;
 import pixi.core.text.DefaultStyle;
 import js.html.KeyboardEvent;

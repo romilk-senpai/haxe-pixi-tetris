@@ -1,7 +1,5 @@
 package tetris.game;
 
-import js.html.Console;
-
 class TetrisGame {
 	private var _board:Board;
 	private var _renderer:IRenderer;
