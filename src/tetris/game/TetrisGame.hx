@@ -34,11 +34,23 @@ class TetrisGame {
 		}
 
 		if (input.rotateCw) {
-			_current.rotateCw(_board);
+			_current.rotateCw();
+			for (block in _current.blocks) {
+				if (!_board.checkPosition(_current.x + block.x, _current.y + block.y)) {
+					_current.rotateCcw();
+					break;
+				}
+			}
 		}
 
 		if (input.rotateCcw) {
-			_current.rotateCcw(_board);
+			_current.rotateCcw();
+			for (block in _current.blocks) {
+				if (!_board.checkPosition(_current.x + block.x, _current.y + block.y)) {
+					_current.rotateCw();
+					break;
+				}
+			}
 		}
 
 		var movement = 0;

@@ -24,7 +24,7 @@ class Tetromino {
 		y = startY;
 	}
 
-	public function rotateCw(board:Board) {
+	public function rotateCw() {
 		var n = 3;
 		for (block in blocks) {
 			var newX = n - 1 - block.y;
@@ -34,7 +34,7 @@ class Tetromino {
 		}
 	}
 
-	public function rotateCcw(board:Board) {
+	public function rotateCcw() {
 		var n = 3;
 		for (block in blocks) {
 			var newX = block.y;
