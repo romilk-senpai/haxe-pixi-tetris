@@ -4,6 +4,8 @@ class Board {
 	public var gridWidth:Int;
 	public var gridHeight:Int;
 
+	public var onRowCollapsed:Int->Void;
+
 	private var _grid:Array<Int>;
 
 	public function new(width:Int, height:Int) {
@@ -48,6 +50,10 @@ class Board {
 				_grid[(rowY - y) * gridHeight + x] = _grid[(rowY - y - 1) * gridHeight + x];
 				_grid[(rowY - y - 1) * gridHeight + x] = 0;
 			}
+		}
+
+		if (onRowCollapsed != null) {
+			onRowCollapsed(rowY);
 		}
 	}
 

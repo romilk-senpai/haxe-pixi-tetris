@@ -7,4 +7,5 @@ interface IRenderer {
 	public function drawTetromino(tetromino:Tetromino):Void;
 	public function pollEvents():TetrisInput;
 	public function drawGameOver():Void;
+	public function updateScore(score:Int):Void;
 }

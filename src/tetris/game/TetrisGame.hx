@@ -1,5 +1,7 @@
 package tetris.game;
 
+import js.html.Console;
+
 class TetrisGame {
 	private var _board:Board;
 	private var _renderer:IRenderer;
@@ -11,6 +13,7 @@ class TetrisGame {
 	private var _current:Tetromino;
 
 	private var _gameOver:Bool;
+	private var _score:Int;
 
 	public function new(renderer:IRenderer) {
 		_renderer = renderer;
@@ -23,8 +26,16 @@ class TetrisGame {
 		_lastMoveTime = 0;
 		_moveGap = 5.0;
 		_gameOver = false;
+		_score = 0;
 
 		_current = Tetromino.newRandom(_board.gridWidth);
+
+		_renderer.updateScore(0);
+
+		_board.onRowCollapsed = (rowY) -> {
+			_score++;
+			_renderer.updateScore(_score);
+		}
 	}
 
 	public function loop(deltaTime:Float) {
