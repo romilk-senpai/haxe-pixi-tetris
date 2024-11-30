@@ -16,18 +16,19 @@ class Tetromino {
 	public var x:Int;
 	public var y:Int;
 	public var color:Int;
+	public var matrixSize:Int;
 
-	public function new(startX:Int, startY:Int, blocks:Array<Block>, color:Int) {
+	public function new(startX:Int, startY:Int, blocks:Array<Block>, color:Int, matrixSize:Int = 3) {
 		this.blocks = blocks;
 		this.color = color;
 		x = startX;
 		y = startY;
+		this.matrixSize = matrixSize;
 	}
 
 	public function rotateCw() {
-		var n = 3;
 		for (block in blocks) {
-			var newX = n - 1 - block.y;
+			var newX = matrixSize - 1 - block.y;
 			var newY = block.x;
 			block.x = newX;
 			block.y = newY;
@@ -35,10 +36,9 @@ class Tetromino {
 	}
 
 	public function rotateCcw() {
-		var n = 3;
 		for (block in blocks) {
 			var newX = block.y;
-			var newY = n - 1 - block.x;
+			var newY = matrixSize - 1 - block.x;
 			block.x = newX;
 			block.y = newY;
 		}
@@ -69,13 +69,13 @@ class Tetromino {
 	public static function newO(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2) - 1;
 		var blocks = [new Block(0, 0), new Block(0, 1), new Block(1, 0), new Block(1, 1)];
-		return new Tetromino(startX, -1, blocks, TetrominoColors.Yellow);
+		return new Tetromino(startX, -1, blocks, TetrominoColors.Yellow, 2);
 	}
 
 	public static function newI(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
-		var blocks = [new Block(0, 0), new Block(0, 1), new Block(0, 2), new Block(0, 3)];
-		return new Tetromino(startX, -3, blocks, TetrominoColors.Aqua);
+		var blocks = [new Block(1, 0), new Block(1, 1), new Block(1, 2), new Block(1, 3)];
+		return new Tetromino(startX, -3, blocks, TetrominoColors.Aqua, 4);
 	}
 
 	public static function newS(boardWidth:Int = 10):Tetromino {
@@ -105,6 +105,6 @@ class Tetromino {
 	public static function newT(boardWidth:Int = 10):Tetromino {
 		var startX = Math.round(boardWidth / 2 - 1);
 		var blocks = [new Block(0, 1), new Block(1, 1), new Block(1, 2), new Block(2, 1)];
-		return new Tetromino(startX, -1, blocks, TetrominoColors.Purple);
+		return new Tetromino(startX, -2, blocks, TetrominoColors.Purple);
 	}
 }
