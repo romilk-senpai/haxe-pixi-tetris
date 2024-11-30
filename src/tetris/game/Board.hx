@@ -55,4 +55,8 @@ class Board {
 		var state = _grid[y * gridHeight + x];
 		return state != null ? state : 0;
 	}
+
+	public function checkPosition(x:Int, y:Int):Bool {
+		return getBlockState(x, y) == 0 && x >= 0 && x < gridWidth && y < gridHeight;
+	}
 }

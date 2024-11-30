@@ -34,36 +34,30 @@ class TetrisGame {
 		}
 
 		if (input.rotateCw) {
-			_current.rotateCw();
+			_current.rotateCw(_board);
 		}
 
 		if (input.rotateCcw) {
-			_current.rotateCcw();
+			_current.rotateCcw(_board);
 		}
 
-		if (input.moveLeft && _current.x > 0) {
-			var move = true;
-			for (block in _current.blocks) {
-				if (_board.getBlockState(_current.x + block.x - 1, _current.y + block.y) > 0) {
-					move = false;
-					break;
-				}
-			}
-			if (move) {
-				_current.x--;
-			}
+		var movement = 0;
+
+		if (input.moveLeft) {
+			movement--;
 		}
 
-		if (input.moveRight && _current.x + _current.blocks[_current.blocks.length - 1].x < _board.gridWidth - 1) {
-			var move = true;
+		if (input.moveRight) {
+			movement++;
+		}
+
+		if (movement != 0) {
+			_current.x += movement;
 			for (block in _current.blocks) {
-				if (_board.getBlockState(_current.x + block.x + 1, _current.y + block.y) > 0) {
-					move = false;
+				if (!_board.checkPosition(_current.x + block.x, _current.y + block.y)) {
+					_current.x -= movement;
 					break;
 				}
-			}
-			if (move) {
-				_current.x++;
 			}
 		}
 
@@ -93,7 +87,7 @@ class TetrisGame {
 				return true;
 			}
 
-			if (_current.y < _board.gridHeight - 1 && checkPosition(_current.x + blocks[i].x, _current.y + blocks[i].y + 1)) {
+			if (_current.y < _board.gridHeight - 1 && !_board.checkPosition(_current.x + blocks[i].x, _current.y + blocks[i].y + 1)) {
 				onReachedBottom();
 				return true;
 			}
@@ -105,14 +99,10 @@ class TetrisGame {
 		_board.applyTetromino(_current);
 		_current = Tetromino.newRandom(_board.gridWidth);
 		for (block in _current.blocks) {
-			if (checkPosition(_current.x + block.x, _current.y + block.y)) {
+			if (!_board.checkPosition(_current.x + block.x, _current.y + block.y)) {
 				_gameOver = true;
 				return;
 			}
 		}
-	}
-
-	private function checkPosition(x:Int, y:Int):Bool {
-		return _board.getBlockState(x, y) > 0;
 	}
 }

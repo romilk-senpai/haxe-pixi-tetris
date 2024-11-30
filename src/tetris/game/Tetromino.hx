@@ -1,7 +1,5 @@
 package tetris.game;
 
-import js.html.Console;
-
 class TetrominoColors {
 	public static var Aqua = 0x00FFFF;
 	public static var Yellow = 0xFFFF00;
@@ -26,7 +24,7 @@ class Tetromino {
 		y = startY;
 	}
 
-	public function rotateCw() {
+	public function rotateCw(board:Board) {
 		var n = 3;
 		for (block in blocks) {
 			var newX = n - 1 - block.y;
@@ -36,7 +34,7 @@ class Tetromino {
 		}
 	}
 
-	public function rotateCcw() {
+	public function rotateCcw(board:Board) {
 		var n = 3;
 		for (block in blocks) {
 			var newX = block.y;
