@@ -62,7 +62,7 @@ class PixiImpl extends Application implements IRenderer {
 	}
 
 	public function drawTetromino(tetromino:Tetromino) {
-		for (block in tetromino.rotations[tetromino.rotation]) {
+		for (block in tetromino.blocks) {
 			drawBlock(tetromino.x + block.x, tetromino.y + block.y, tetromino.color);
 		}
 	}
