@@ -1,3 +1,7 @@
+install-deps:
+	haxelib newrepo
+	haxelib install pixijs 5.1.2
+
 build:
 	haxe build.hxml
 
