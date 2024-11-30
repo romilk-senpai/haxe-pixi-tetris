@@ -14,9 +14,9 @@ import pixi.core.graphics.Graphics;
 import js.Browser;
 
 class PixiImpl extends Application implements IRenderer {
-	private static final SCREEN_WIDTH:Int = 360;
-	private static final SCREEN_HEIGHT:Int = 720;
-	private static final BG_COLOR:Int = 0x14182E;
+	private static final SCREEN_WIDTH:Int = 364;
+	private static final SCREEN_HEIGHT:Int = 724;
+	private static final BG_COLOR:Int = 0x050505;
 
 	private var _graphics:Graphics;
 
@@ -31,7 +31,7 @@ class PixiImpl extends Application implements IRenderer {
 			width: SCREEN_WIDTH,
 			height: SCREEN_HEIGHT,
 			backgroundColor: BG_COLOR,
-			transparent: true,
+			transparent: false,
 			antialias: false
 		};
 
@@ -70,11 +70,8 @@ class PixiImpl extends Application implements IRenderer {
 	private function drawBlock(x:Int, y:Int, state:Int) {
 		var outerSize = 36;
 		var innerSize = 32;
-		var outerX = x * outerSize;
-		var outerY = y * outerSize;
-		_graphics.beginFill(0x050505, 1);
-		_graphics.drawRect(outerX, outerY, outerSize, outerSize);
-		_graphics.endFill();
+		var outerX = 2 + x * outerSize;
+		var outerY = 2 + y * outerSize;
 		var innerX = outerX + outerSize / 2 - innerSize / 2;
 		var innerY = outerY + outerSize / 2 - innerSize / 2;
 		_graphics.beginFill(state == 0 ? 0x16181A : state, 1);
@@ -114,7 +111,7 @@ class PixiImpl extends Application implements IRenderer {
 		if (_label == null) {
 			_graphics.clear();
 			var style1:DefaultStyle = {};
-			style1.fill = 0xF78181;
+			style1.fill = 0xFFFFFF;
 			style1.fontSize = 36;
 			style1.fontFamily = "Courier";
 			_label = new Text("GAME OVER", style1);
