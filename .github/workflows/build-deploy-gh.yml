@@ -21,6 +21,7 @@ jobs:
       - name: Build tetris-pixi
         run: |
           make build
+          cp .build.gitignore bin/js/.gitignore
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
