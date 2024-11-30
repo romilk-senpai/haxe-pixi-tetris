@@ -14,6 +14,10 @@ class TetrisGame {
 
 	public function new(renderer:IRenderer) {
 		_renderer = renderer;
+		initGame();
+	}
+
+	private function initGame() {
 		_board = new Board(10, 20);
 		_totalTime = 0;
 		_lastMoveTime = 0;
@@ -29,6 +33,11 @@ class TetrisGame {
 		var input = _renderer.pollEvents();
 
 		if (_gameOver) {
+			if (input.anyKey) {
+				initGame();
+				return;
+			}
+
 			_renderer.drawGameOver();
 			return;
 		}
@@ -85,6 +94,10 @@ class TetrisGame {
 				}
 				_lastMoveTime += _moveGap;
 			}
+		}
+
+		if (_gameOver) {
+			return;
 		}
 
 		_renderer.drawBoard(_board);
