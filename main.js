@@ -269,7 +269,65 @@ tetris_game_Tetromino.newRandom = function(boardWidth) {
 	if(boardWidth == null) {
 		boardWidth = 10;
 	}
-	return tetris_game_Tetromino.newJ(boardWidth);
+	var randomNumber = Math.floor(Math.random() * 7) + 1;
+	switch(randomNumber) {
+	case 1:
+		return tetris_game_Tetromino.newO(boardWidth);
+	case 2:
+		return tetris_game_Tetromino.newI(boardWidth);
+	case 3:
+		return tetris_game_Tetromino.newS(boardWidth);
+	case 4:
+		return tetris_game_Tetromino.newZ(boardWidth);
+	case 5:
+		return tetris_game_Tetromino.newL(boardWidth);
+	case 6:
+		return tetris_game_Tetromino.newJ(boardWidth);
+	case 7:
+		return tetris_game_Tetromino.newT(boardWidth);
+	default:
+		return null;
+	}
+};
+tetris_game_Tetromino.newO = function(boardWidth) {
+	if(boardWidth == null) {
+		boardWidth = 10;
+	}
+	var startX = Math.round(boardWidth / 2) - 1;
+	var blocks = [new tetris_game_Block(0,0),new tetris_game_Block(0,1),new tetris_game_Block(1,0),new tetris_game_Block(1,1)];
+	return new tetris_game_Tetromino(startX,-1,blocks,tetris_game_TetrominoColors.Yellow,2);
+};
+tetris_game_Tetromino.newI = function(boardWidth) {
+	if(boardWidth == null) {
+		boardWidth = 10;
+	}
+	var startX = Math.round(boardWidth / 2 - 1);
+	var blocks = [new tetris_game_Block(1,0),new tetris_game_Block(1,1),new tetris_game_Block(1,2),new tetris_game_Block(1,3)];
+	return new tetris_game_Tetromino(startX,-3,blocks,tetris_game_TetrominoColors.Aqua,4);
+};
+tetris_game_Tetromino.newS = function(boardWidth) {
+	if(boardWidth == null) {
+		boardWidth = 10;
+	}
+	var startX = Math.round(boardWidth / 2 - 1);
+	var blocks = [new tetris_game_Block(0,1),new tetris_game_Block(1,0),new tetris_game_Block(1,1),new tetris_game_Block(2,0)];
+	return new tetris_game_Tetromino(startX,-1,blocks,tetris_game_TetrominoColors.Red);
+};
+tetris_game_Tetromino.newZ = function(boardWidth) {
+	if(boardWidth == null) {
+		boardWidth = 10;
+	}
+	var startX = Math.round(boardWidth / 2 - 1);
+	var blocks = [new tetris_game_Block(0,0),new tetris_game_Block(1,0),new tetris_game_Block(1,1),new tetris_game_Block(2,1)];
+	return new tetris_game_Tetromino(startX,-1,blocks,tetris_game_TetrominoColors.Green);
+};
+tetris_game_Tetromino.newL = function(boardWidth) {
+	if(boardWidth == null) {
+		boardWidth = 10;
+	}
+	var startX = Math.round(boardWidth / 2 - 1);
+	var blocks = [new tetris_game_Block(0,0),new tetris_game_Block(0,1),new tetris_game_Block(0,2),new tetris_game_Block(1,2)];
+	return new tetris_game_Tetromino(startX,-2,blocks,tetris_game_TetrominoColors.Orange);
 };
 tetris_game_Tetromino.newJ = function(boardWidth) {
 	if(boardWidth == null) {
@@ -278,6 +336,14 @@ tetris_game_Tetromino.newJ = function(boardWidth) {
 	var startX = Math.round(boardWidth / 2 - 1);
 	var blocks = [new tetris_game_Block(0,2),new tetris_game_Block(1,0),new tetris_game_Block(1,1),new tetris_game_Block(1,2)];
 	return new tetris_game_Tetromino(startX,-2,blocks,tetris_game_TetrominoColors.Blue);
+};
+tetris_game_Tetromino.newT = function(boardWidth) {
+	if(boardWidth == null) {
+		boardWidth = 10;
+	}
+	var startX = Math.round(boardWidth / 2 - 1);
+	var blocks = [new tetris_game_Block(0,1),new tetris_game_Block(1,1),new tetris_game_Block(1,2),new tetris_game_Block(2,1)];
+	return new tetris_game_Tetromino(startX,-2,blocks,tetris_game_TetrominoColors.Purple);
 };
 tetris_game_Tetromino.prototype = {
 	rotateCw: function() {
@@ -428,7 +494,13 @@ tetris_pixi_PixiImpl.prototype = $extend(PIXI.Application.prototype,{
 var $_;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $global.$haxeUID++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = m.bind(o); o.hx__closures__[m.__id__] = f; } return f; }
 $global.$haxeUID |= 0;
+tetris_game_TetrominoColors.Aqua = 65535;
+tetris_game_TetrominoColors.Yellow = 16776960;
+tetris_game_TetrominoColors.Purple = 8388736;
+tetris_game_TetrominoColors.Green = 65280;
+tetris_game_TetrominoColors.Red = 16711680;
 tetris_game_TetrominoColors.Blue = 255;
+tetris_game_TetrominoColors.Orange = 16744192;
 tetris_pixi_PixiImpl.SCREEN_WIDTH = 364;
 tetris_pixi_PixiImpl.SCREEN_HEIGHT = 750;
 tetris_pixi_PixiImpl.BG_COLOR = 328965;
