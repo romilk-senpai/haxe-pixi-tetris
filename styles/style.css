@@ -18,6 +18,8 @@ body {
 
 .controls {
 	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 	display: flex;
 	width: 1280px;
 	margin: 24px auto;
