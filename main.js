@@ -197,13 +197,17 @@ tetris_game_TetrisGame.prototype = {
 				}
 			}
 		}
-		if(input.moveDown) {
+		if(input.instantPlace) {
+			this._current.y = this.getBottomMostPos();
+			this.onReachedBottom();
+			this._lastMoveTime += this._moveGap;
+		} else if(input.moveDown) {
 			this._lastMoveTime = this._totalTime;
-			if(!this.move()) {
+			if(!this.checkPosition()) {
 				this._current.y++;
 			}
 		} else if(this._totalTime >= this._lastMoveTime + this._moveGap) {
-			if(!this.move()) {
+			if(!this.checkPosition()) {
 				this._current.y++;
 			}
 			this._lastMoveTime += this._moveGap;
@@ -212,9 +216,10 @@ tetris_game_TetrisGame.prototype = {
 			return;
 		}
 		this._renderer.drawBoard(this._board);
+		this._renderer.drawGhostTetromino(this._current,this.getBottomMostPos());
 		this._renderer.drawTetromino(this._current);
 	}
-	,move: function() {
+	,checkPosition: function() {
 		var blocks = this._current.blocks;
 		var _g = 0;
 		var _g1 = blocks.length;
@@ -243,6 +248,21 @@ tetris_game_TetrisGame.prototype = {
 				this._gameOver = true;
 				return;
 			}
+		}
+	}
+	,getBottomMostPos: function() {
+		var y = this._current.y;
+		while(true) {
+			var _g = 0;
+			var _g1 = this._current.blocks;
+			while(_g < _g1.length) {
+				var block = _g1[_g];
+				++_g;
+				if(!this._board.checkPosition(this._current.x + block.x,y + block.y + 1)) {
+					return y;
+				}
+			}
+			++y;
 		}
 	}
 };
@@ -476,6 +496,9 @@ tetris_pixi_PixiImpl.prototype = $extend(PIXI.Application.prototype,{
 		if(e.keyCode == 90) {
 			this._input.rotateCcw = true;
 		}
+		if(e.keyCode == 32) {
+			this._input.instantPlace = true;
+		}
 	}
 	,drawGameOver: function() {
 		if(this._inGame) {
@@ -489,6 +512,31 @@ tetris_pixi_PixiImpl.prototype = $extend(PIXI.Application.prototype,{
 	,updateScore: function(score,level) {
 		this._score = score;
 		this._level = level;
+	}
+	,drawGhostTetromino: function(tetromino,posY) {
+		var _g = 0;
+		var _g1 = tetromino.blocks;
+		while(_g < _g1.length) {
+			var block = _g1[_g];
+			++_g;
+			var x = tetromino.x + block.x;
+			var y = posY + block.y;
+			var outerSize = 36;
+			var innerSize = 32;
+			var inner2XSize = 28;
+			var outerX = 2 + x * outerSize;
+			var outerY = 28 + y * outerSize;
+			var innerX = outerX + outerSize / 2 - innerSize / 2;
+			var innerY = outerY + outerSize / 2 - innerSize / 2;
+			var inner2X = innerX + innerSize / 2 - inner2XSize / 2;
+			var inner2Y = innerY + innerSize / 2 - inner2XSize / 2;
+			this._graphics.beginFill(11579568);
+			this._graphics.drawRect(innerX,innerY,innerSize,innerSize);
+			this._graphics.endFill();
+			this._graphics.beginFill(1447962);
+			this._graphics.drawRect(inner2X,inner2Y,inner2XSize,inner2XSize);
+			this._graphics.endFill();
+		}
 	}
 });
 var $_;
