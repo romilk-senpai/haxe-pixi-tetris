@@ -97,18 +97,20 @@ class TetrisGame {
 			}
 		}
 
-		if (input.moveDown) {
+		if (input.instantPlace) {
+			_current.y = getBottomMostPos();
+			onReachedBottom();
+			_lastMoveTime += _moveGap;
+		} else if (input.moveDown) {
 			_lastMoveTime = _totalTime;
-			if (!move()) {
+			if (!checkPosition()) {
 				_current.y++;
 			}
-		} else {
-			if (_totalTime >= _lastMoveTime + _moveGap) {
-				if (!move()) {
-					_current.y++;
-				}
-				_lastMoveTime += _moveGap;
+		} else if (_totalTime >= _lastMoveTime + _moveGap) {
+			if (!checkPosition()) {
+				_current.y++;
 			}
+			_lastMoveTime += _moveGap;
 		}
 
 		if (_gameOver) {
@@ -116,10 +118,11 @@ class TetrisGame {
 		}
 
 		_renderer.drawBoard(_board);
+		_renderer.drawGhostTetromino(_current, getBottomMostPos());
 		_renderer.drawTetromino(_current);
 	}
 
-	private function move():Bool {
+	private function checkPosition():Bool {
 		var blocks = _current.blocks;
 		for (i in 0...blocks.length) {
 			if (_current.y + blocks[i].y == _board.gridHeight - 1) {
@@ -144,5 +147,18 @@ class TetrisGame {
 				return;
 			}
 		}
+	}
+
+	private function getBottomMostPos():Int {
+		var y = _current.y;
+		while (true) {
+			for (block in _current.blocks) {
+				if (!_board.checkPosition(_current.x + block.x, y + block.y + 1)) {
+					return y;
+				}
+			}
+			y++;
+		}
+		return -1;
 	}
 }

@@ -151,6 +151,10 @@ class PixiImpl extends Application implements IRenderer {
 		if (e.keyCode == KeyEvent.DOM_VK_Z) {
 			_input.rotateCcw = true;
 		}
+
+		if (e.keyCode == KeyEvent.DOM_VK_SPACE) {
+			_input.instantPlace = true;
+		}
 	}
 
 	public function drawGameOver() {
@@ -166,5 +170,27 @@ class PixiImpl extends Application implements IRenderer {
 	public function updateScore(score:Int, level:Int) {
 		_score = score;
 		_level = level;
+	}
+
+	public function drawGhostTetromino(tetromino:Tetromino, posY:Int) {
+		for (block in tetromino.blocks) {
+			var x = tetromino.x + block.x;
+			var y = posY + block.y;
+			var outerSize = 36;
+			var innerSize = 32;
+			var inner2XSize = 28;
+			var outerX = 2 + x * outerSize;
+			var outerY = 24 + 4 + y * outerSize;
+			var innerX = outerX + outerSize / 2 - innerSize / 2;
+			var innerY = outerY + outerSize / 2 - innerSize / 2;
+			var inner2X = innerX + innerSize / 2 - inner2XSize / 2;
+			var inner2Y = innerY + innerSize / 2 - inner2XSize / 2;
+			_graphics.beginFill(0xB0B0B0);
+			_graphics.drawRect(innerX, innerY, innerSize, innerSize);
+			_graphics.endFill();
+			_graphics.beginFill(0x16181A);
+			_graphics.drawRect(inner2X, inner2Y, inner2XSize, inner2XSize);
+			_graphics.endFill();
+		}
 	}
 }

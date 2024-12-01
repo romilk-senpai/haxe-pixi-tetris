@@ -7,6 +7,7 @@ class TetrisInput {
 	public var moveDown:Bool;
 	public var rotateCw:Bool;
 	public var rotateCcw:Bool;
+	public var instantPlace:Bool;
 
 	public function new() {
 		anyKey = false;
