@@ -24,8 +24,12 @@ class PixiImpl extends Application implements IRenderer {
 	private var _input:TetrisInput;
 	private var _scoreLabel:Text;
 	private var _gameOverLabel:Text;
+	private var _levelLabel:Text;
 
 	private var _score:Int;
+	private var _level:Int;
+
+	private var _inGame:Bool;
 
 	public function new() {
 		_game = new TetrisGame(this);
@@ -41,10 +45,30 @@ class PixiImpl extends Application implements IRenderer {
 		_graphics = new Graphics();
 		_input = new TetrisInput();
 
+		_inGame = false;
+
+		var style1:DefaultStyle = {};
+		style1.fill = 0xFFFFFF;
+		style1.fontSize = 18;
+		style1.align = 'left';
+		style1.fontWeight = "400";
+		_scoreLabel = new Text("", style1);
+		_levelLabel = new Text("", style1);
+
+		var style2:DefaultStyle = {};
+		style2.fill = 0xFFFFFF;
+		style2.fontSize = 32;
+		style2.align = 'center';
+		_gameOverLabel = new Text('GAME OVER\nSCORE:$_score\nPRESS ANY KEY\nTO RESTART', style2);
+		_gameOverLabel.position.set(SCREEN_WIDTH / 2 - _gameOverLabel.width / 2, SCREEN_HEIGHT / 2 - _gameOverLabel.height / 2);
+
+		var lastTime = Browser.window.performance.now();
 		super(options);
-		ticker.add(function(deltaTime) {
-			// This dt is bullshit need to double check this sometime
-			_game.loop(deltaTime / ticker.FPS);
+		ticker.add((badDeltaTime) -> {
+			var time = Browser.window.performance.now();
+			var goodDeltaTime = (time - lastTime) / 1000;
+			_game.loop(goodDeltaTime);
+			lastTime = time;
 			_input = new TetrisInput();
 		});
 
@@ -57,21 +81,11 @@ class PixiImpl extends Application implements IRenderer {
 
 	public function drawBoard(board:Board) {
 		_graphics.clear();
-		if (_gameOverLabel != null) {
+		if (!_inGame) {
 			stage.removeChild(_gameOverLabel);
-			_gameOverLabel = null;
-		}
-
-		if (_scoreLabel == null) {
-			var headerHeight = 24;
-			var style:DefaultStyle = {};
-			style.fill = 0xFFFFFF;
-			style.fontSize = 18;
-			style.align = 'left';
-			style.fontWeight = "400";
-			_scoreLabel = new Text('SCORE: $_score', style);
-			_scoreLabel.position.set(4, 2 + headerHeight / 2.0 - _scoreLabel.height / 2.0);
 			stage.addChild(_scoreLabel);
+			stage.addChild(_levelLabel);
+			_inGame = true;
 		}
 
 		for (x in 0...board.gridWidth) {
@@ -80,6 +94,13 @@ class PixiImpl extends Application implements IRenderer {
 				drawBlock(x, y, state);
 			}
 		}
+
+		_scoreLabel.text = 'SCORE: $_score';
+		_levelLabel.text = 'LEVEL: $_level';
+
+		var headerHeight = 24;
+		_scoreLabel.position.set(4, 2 + headerHeight / 2.0 - _scoreLabel.height / 2.0);
+		_levelLabel.position.set(SCREEN_WIDTH - _levelLabel.width - 4, 2 + headerHeight / 2.0 - _scoreLabel.height / 2.0);
 	}
 
 	public function drawTetromino(tetromino:Tetromino) {
@@ -133,27 +154,17 @@ class PixiImpl extends Application implements IRenderer {
 	}
 
 	public function drawGameOver() {
-		if (_gameOverLabel != null) {
-			stage.removeChild(_scoreLabel);
-			_scoreLabel = null;
-		}
-
-		if (_gameOverLabel == null) {
+		if (_inGame) {
 			_graphics.clear();
-			var style:DefaultStyle = {};
-			style.fill = 0xFFFFFF;
-			style.fontSize = 32;
-			style.align = 'center';
-			_gameOverLabel = new Text('GAME OVER\nSCORE:$_score\nPRESS ANY KEY\nTO RESTART', style);
-			_gameOverLabel.position.set(SCREEN_WIDTH / 2 - _gameOverLabel.width / 2, SCREEN_HEIGHT / 2 - _gameOverLabel.height / 2);
+			stage.removeChild(_scoreLabel);
+			stage.removeChild(_levelLabel);
 			stage.addChild(_gameOverLabel);
+			_inGame = false;
 		}
 	}
 
-	public function updateScore(score:Int) {
+	public function updateScore(score:Int, level:Int) {
 		_score = score;
-		if (_scoreLabel != null) {
-			_scoreLabel.text = 'SCORE: $_score';
-		}
+		_level = level;
 	}
 }

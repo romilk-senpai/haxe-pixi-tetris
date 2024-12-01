@@ -12,6 +12,7 @@ class TetrisGame {
 
 	private var _gameOver:Bool;
 	private var _score:Int;
+	private var _level:Int;
 
 	public function new(renderer:IRenderer) {
 		_renderer = renderer;
@@ -22,17 +23,22 @@ class TetrisGame {
 		_board = new Board(10, 20);
 		_totalTime = 0;
 		_lastMoveTime = 0;
-		_moveGap = 5.0;
 		_gameOver = false;
 		_score = 0;
+		_level = 1;
+		_moveGap = 0.85;
 
 		_current = Tetromino.newRandom(_board.gridWidth);
 
-		_renderer.updateScore(0);
+		_renderer.updateScore(_score, _level);
 
 		_board.onRowCollapsed = (rowY) -> {
 			_score++;
-			_renderer.updateScore(_score);
+			_level = 1 + Std.int(_score / 10);
+			if (_level < 15) {
+				_moveGap = Math.pow(0.85, _level);
+			}
+			_renderer.updateScore(_score, _level);
 		}
 	}
 
