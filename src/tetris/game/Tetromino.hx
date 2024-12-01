@@ -45,7 +45,6 @@ class Tetromino {
 	}
 
 	public static function newRandom(boardWidth:Int = 10):Tetromino {
-		return newJ(boardWidth);
 		var randomNumber = Math.floor(Math.random() * 7) + 1;
 		switch (randomNumber) {
 			case 1:
