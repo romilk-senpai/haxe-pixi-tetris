@@ -22,7 +22,7 @@ make install-deps-js
 ```shell
 make build-js
 ```
-* Or run (requires python3 with http.server)
+* Or build&run (requires python3 with http.server)
 ```shell
 make run-js
 ```
