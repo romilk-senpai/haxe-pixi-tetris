@@ -15,7 +15,7 @@ sudo apt-get install haxe -y
 
 * Install dependencies
 ```shell
-make install deps
+make install-deps-js
 ```
 
 * Build js and host as you like
