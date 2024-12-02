@@ -504,6 +504,7 @@ tetris_pixi_PixiImpl.prototype = $extend(PIXI.Application.prototype,{
 			this.stage.removeChild(this._scoreLabel);
 			this.stage.removeChild(this._levelLabel);
 			this.stage.addChild(this._gameOverLabel);
+			this._gameOverLabel.text = "GAME OVER\nSCORE:" + this._score + "\nPRESS ANY KEY\nTO RESTART";
 			this._inGame = false;
 		}
 	}
