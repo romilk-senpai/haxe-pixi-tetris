@@ -16,11 +16,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install haxe -y
           mkdir ~/haxelib && haxelib setup ~/haxelib
-          make install-deps
+          make install-deps-js
 
       - name: Build tetris-pixi
         run: |
-          make build
+          make build-js
           cp .build.gitignore bin/js/.gitignore
 
       - name: Deploy
