@@ -1,3 +1,4 @@
+#if js
 package tetris.pixi;
 
 import pixi.core.text.Text;
@@ -19,8 +20,8 @@ class PixiImpl extends Application implements IRenderer {
 	private static final BG_COLOR:Int = 0x050505;
 
 	private var _graphics:Graphics;
-
 	private var _game:TetrisGame;
+
 	private var _input:TetrisInput;
 	private var _scoreLabel:Text;
 	private var _gameOverLabel:Text;
@@ -32,8 +33,6 @@ class PixiImpl extends Application implements IRenderer {
 	private var _inGame:Bool;
 
 	public function new() {
-		_game = new TetrisGame(this);
-
 		var options:ApplicationOptions = {
 			width: SCREEN_WIDTH,
 			height: SCREEN_HEIGHT,
@@ -43,6 +42,7 @@ class PixiImpl extends Application implements IRenderer {
 		};
 
 		_graphics = new Graphics();
+		_game = new TetrisGame(this);
 		_input = new TetrisInput();
 
 		_inGame = false;
@@ -194,3 +194,4 @@ class PixiImpl extends Application implements IRenderer {
 		}
 	}
 }
+#end
