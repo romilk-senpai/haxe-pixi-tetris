@@ -13,7 +13,7 @@ build-js:
 
 build-c:
 	haxe build-c.hxml
-	gcc -O3 -o bin/c/haxe-tetris -I bin/c/src -I .haxelib/hashlink/git/src bin/c/src/main.c -I raylib-5.5_linux_amd64/include -L .haxelib/hashlink/git -L raylib-5.5_linux_amd64/lib -lhl -lraylib -Wl,-rpath,$(ORIGIN)
+	gcc -O3 -o bin/c/haxe-tetris -I bin/c/src -I .haxelib/hashlink/git/src bin/c/src/main.c -I raylib-5.5_linux_amd64/include -L .haxelib/hashlink/git -L raylib-5.5_linux_amd64/lib -lhl -lraylib -Wl,-rpath='$$ORIGIN'
 
 run-js:
 	make build-js

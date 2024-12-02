@@ -1,3 +1,4 @@
+#if hl
 package tetris.raylib;
 
 import haxe.rtti.CType;
@@ -8,3 +9,4 @@ extern class Raylib {
 	@:native("WindowShouldClose") public static function WindowShouldClose():Bool;
 	@:native("CloseWindow") public static function CloseWindow():Void;
 }
+#end

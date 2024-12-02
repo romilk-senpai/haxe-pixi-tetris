@@ -1,3 +1,4 @@
+#if hl
 package tetris.raylib;
 
 import tetris.game.Board;
@@ -23,3 +24,4 @@ class RaylibImpl implements IRenderer {
 
 	public function drawGhostTetromino(tetromino:Tetromino, posY:Int) {}
 }
+#end

@@ -62,8 +62,12 @@ class Board {
 	}
 
 	public function getBlockState(x:Int, y:Int):Int {
-		var state = _grid[y * gridHeight + x];
+		var state:Int = _grid[y * gridHeight + x];
+		#if js
 		return state != null ? state : 0;
+		#else
+		return state;
+		#end
 	}
 
 	public function checkPosition(x:Int, y:Int):Bool {
