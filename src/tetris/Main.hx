@@ -15,7 +15,8 @@ class Main {
 		#else
 		// var raylib = new RaylibImpl();
 		// new TetrisGame(raylib);
-		Raylib.InitWindow(800, 600, "Raylib");
+		trace("Hello World");
+		Raylib.InitWindow(800, 600, "HI HI");
 		#end
 	}
 }

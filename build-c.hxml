@@ -1,5 +1,4 @@
 -cp src
---dce full
 
 -main tetris.Main
 -hl bin/c/src/main.c

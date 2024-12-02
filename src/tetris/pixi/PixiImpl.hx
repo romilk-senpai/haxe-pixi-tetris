@@ -163,6 +163,7 @@ class PixiImpl extends Application implements IRenderer {
 			stage.removeChild(_scoreLabel);
 			stage.removeChild(_levelLabel);
 			stage.addChild(_gameOverLabel);
+			_gameOverLabel.text = 'GAME OVER\nSCORE:$_score\nPRESS ANY KEY\nTO RESTART';
 			_inGame = false;
 		}
 	}
